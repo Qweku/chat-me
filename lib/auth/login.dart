@@ -101,12 +101,8 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height:height*0.2),
-              Icon(
-                Icons.chat,
-                color: primaryColor,
-                size: 70,
-              ),
+              SizedBox(height:height*0.15),
+              Image.asset("assets/images/app_logo.png",height: height*0.15,),
               const SizedBox(
                 height: 50,
               ),
@@ -158,34 +154,13 @@ class _LoginScreenState extends State<LoginScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     Checkbox(
-                  //       activeColor: primaryColor,
-                  //       value: isChecked,
-                  //       onChanged: (val) {
-                  //         //     SharedPreferences.getInstance().then((prefs) {
-                  //         //   prefs.setBool('remember_me', val ?? false);
-                  //         // });
-                  //         setState(() {
-                  //           isChecked = val!;
-                  //         });
-                  //       },
-                  //     ),
-                  //     // const SizedBox(width: 7,),
-                  //     Text(
-                  //       'Remember me',
-                  //       style: bodyTextBlack,
-                  //     )
-                  //   ],
-                  // ),
+                
                   
                   TextButton(
                       onPressed: () {},
                       child: Text(
                         'Forgot the password?',
-                        style: bodyTextBlack.copyWith(color: primaryColor),
+                        style: bodyTextBlack.copyWith(color: secondaryColor),
                       )),
                 ],
               ),
@@ -215,7 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: widget.onTap,
                     child: Text(
                       'Sign Up',
-                      style: bodyTextBlack.copyWith(color: primaryColor),
+                      style: bodyTextBlack.copyWith(color: secondaryColor),
                     ),
                   )
                 ],

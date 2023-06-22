@@ -140,7 +140,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                         Icon(Icons.chat,size:70,color:primaryColor),
+                         Image.asset("assets/images/app_logo.png",height: height*0.15,),
                           SizedBox(height: height * 0.01),
                           Text(
                             'Chat Me',
@@ -185,7 +185,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                                               width: width,
                                               color: canResendEmail
                                                   ? primaryColor
-                                                  : lightGreyColor,
+                                                  : Colors.grey,
                                               // textColor: primaryColorLight,
                                               buttonText: 'Resend Email',
                                               onTap: canResendEmail

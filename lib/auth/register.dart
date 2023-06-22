@@ -88,12 +88,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height:height*0.2),
-              Icon(
-                Icons.chat,
-                color: primaryColor,
-                size: 70,
-              ),
+              SizedBox(height:height*0.15),
+              Image.asset("assets/images/app_logo.png",height: height*0.15,),
               const SizedBox(
                 height: 50,
               ),
@@ -201,7 +197,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onPressed: widget.onTap,
                     child: Text(
                       'Login',
-                      style: bodyTextBlack.copyWith(color: primaryColor),
+                      style: bodyTextBlack.copyWith(color: secondaryColor),
                     ),
                   )
                 ],
