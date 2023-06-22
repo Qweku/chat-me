@@ -54,6 +54,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      
       autofocus: autoFocus,
       obscureText: obscure,
       readOnly: readOnly,

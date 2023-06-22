@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
-      title: 'Chat Me',
+      title: 'ChatMe',
       theme: ThemeData(
         fontFamily: josefinRegular,
         primarySwatch: Colors.blue,

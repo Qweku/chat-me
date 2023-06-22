@@ -108,7 +108,8 @@ class _ChatPageState extends State<ChatPage> {
                   : const Color.fromARGB(255, 17, 17, 17),
             ),
             const SizedBox(height:7),
-            Text( data['time'],style: bodyTextBlack.copyWith(color: Colors.grey),)
+            Text( data['time'],style: bodyTextBlack.copyWith(color: Colors.grey),),
+            const SizedBox(height:10),
           ]),
     );
   }
@@ -123,9 +124,17 @@ class _ChatPageState extends State<ChatPage> {
             controller: messageController,
           ),
         ),
-        IconButton(
-            onPressed: sendMessage,
-            icon: Icon(Icons.send, color: primaryColor, size: 30))
+        const SizedBox(width: 10,),
+        CircleAvatar(
+          radius:25,
+          backgroundColor: secondaryColor,
+          child: IconButton(
+              onPressed:(){
+        sendMessage();
+        FocusScope.of(context).unfocus();
+              }, 
+              icon: Icon(Icons.send, color: Colors.white)),
+        )
       ],
     );
   }

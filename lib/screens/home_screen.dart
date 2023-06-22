@@ -28,7 +28,7 @@ DateTime? currentBackPressTime;
             elevation: 0,
             backgroundColor: primaryColor,
             title: Text(
-              "Chat Me",
+              "ChatMe",
               style: headTextWhite,
             ),
             actions: [
@@ -104,7 +104,7 @@ DateTime? currentBackPressTime;
             style: headTextBlack,
           ),
           subtitle: Text(data['email'],style:bodyTextBlack.copyWith(color:Colors.grey)),
-          trailing: const Icon(Icons.message,color: Colors.grey,size:17)
+          trailing:  Icon(Icons.message,color: secondaryColor,size:17)
         ),
       );
     } else {
