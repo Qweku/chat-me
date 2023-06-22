@@ -21,27 +21,30 @@ DateTime? currentBackPressTime;
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
-    return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: primaryColor,
-          title: Text(
-            "Chat Me",
-            style: headTextWhite,
+    return WillPopScope(
+      onWillPop: doubleTapToExit,
+      child: Scaffold(
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: primaryColor,
+            title: Text(
+              "Chat Me",
+              style: headTextWhite,
+            ),
+            actions: [
+              IconButton(
+                  onPressed: () => authService.signOut(),
+                  icon: const Icon(
+                    Icons.logout,
+                    color: Colors.white,
+                  )),
+              IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.settings, color: Colors.white))
+            ],
           ),
-          actions: [
-            IconButton(
-                onPressed: () => authService.signOut(),
-                icon: const Icon(
-                  Icons.logout,
-                  color: Colors.white,
-                )),
-            IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.settings, color: Colors.white))
-          ],
-        ),
-        body: _buildUserList());
+          body: _buildUserList()),
+    );
   }
 
   Widget _buildUserList() {

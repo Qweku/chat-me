@@ -108,7 +108,7 @@ class _ChatPageState extends State<ChatPage> {
                   : const Color.fromARGB(255, 17, 17, 17),
             ),
             const SizedBox(height:7),
-            Text( timeformat.format(DateTime.now()),style: bodyTextBlack.copyWith(color: Colors.grey),)
+            Text( data['time'],style: bodyTextBlack.copyWith(color: Colors.grey),)
           ]),
     );
   }
