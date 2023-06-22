@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "925555659968",
+    "project_id": "chat-me-dc32d",
+    "storage_bucket": "chat-me-dc32d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925555659968:android:d6e05546813aa498ea4925",
+        "android_client_info": {
+          "package_name": "com.example.chat_me"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925555659968-7ka9cel1ei64ajq966p5ghjibia0eu78.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYFsfI8gi9lfdt4vNjCYIc7a4YEAsbJHk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925555659968-7ka9cel1ei64ajq966p5ghjibia0eu78.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
