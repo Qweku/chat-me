@@ -1,5 +1,6 @@
 import 'package:chat_me/config/app_colors.dart';
 import 'package:chat_me/config/app_text.dart';
+import 'package:chat_me/constants.dart';
 import 'package:chat_me/screens/chat_page.dart';
 import 'package:chat_me/services/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final auth = FirebaseAuth.instance;
-
+DateTime? currentBackPressTime;
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
@@ -106,5 +107,24 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       return Container();
     }
+  }
+  Future<bool> doubleTapToExit() {
+    DateTime now = DateTime.now();
+    if (currentBackPressTime == null ||
+        now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
+      currentBackPressTime = now;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          width: width*0.45,
+            backgroundColor: Color.fromARGB(255, 8, 8, 8),
+            content: Text('Repeat action to exit',
+                textAlign: TextAlign.center, style: bodyTextWhite),
+            duration: const Duration(seconds: 2),
+            behavior: SnackBarBehavior.floating,
+            shape: const StadiumBorder()),
+      );
+      return Future.value(false);
+    }
+    return Future.value(true);
   }
 }
