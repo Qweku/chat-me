@@ -11,7 +11,7 @@ class AuthService {
     if (user == null) {
       return null;
     }
-    return UserModel(user.uid, user.email, user.displayName);
+    return UserModel(uid:user.uid, email:user.email, displayName:user.displayName,userImage:user.photoURL);
   }
 
   Stream<UserModel?> get user {

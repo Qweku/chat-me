@@ -6,6 +6,9 @@ import 'package:chat_me/components/button.dart';
 import 'package:chat_me/config/app_colors.dart';
 import 'package:chat_me/config/app_text.dart';
 import 'package:chat_me/constants.dart';
+import 'package:chat_me/models/user_model.dart';
+import 'package:chat_me/provider/contact_provider.dart';
+import 'package:chat_me/screens/contact_list.dart';
 import 'package:chat_me/screens/home_screen.dart';
 import 'package:chat_me/services/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,39 +30,25 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
   bool isEmailVerified = false;
   bool canResendEmail = false;
   Timer? timer;
-  LocalStorage storage = LocalStorage('shop_mate');
+  LocalStorage storage = LocalStorage('contacts');
   String? shopName;
   bool initialized = false;
 
-  // void bootUp() async {
-  //   shopName = auth.currentUser?.displayName ?? '';
-  //   //if (await storage.ready) {
-  //   var data = await storage.getItem(shopName!.isEmpty ? 'demo' : shopName!);
-  //   if (data == null) {
-  //      Provider.of<GeneralProvider>(context, listen: false).shop = ShopProducts(
-  //         id: 0,
-  //         shopname: 'demo',
-  //         products: [],
-  //         sales: [],
-  //         expenses: [],
-  //         lowStocks: []);
-  //   } else {
-  //     // log('not empty');
-  //     Provider.of<GeneralProvider>(context, listen: false).shop =
-  //         shopProductsFromJson(data);
-  //   }
-  //   Provider.of<NotificationProvider>(context, listen: false)
-  //       .retrieveNotifications();
-  //   // Provider.of<GeneralProvider>(context, listen: false).shop =
-  //   //     shopProductsFromJson(data);
-  //   Provider.of<GeneralProvider>(context, listen: false).shop.shopname =
-  //       shopName;
-  //   // }
-  // }
+  void bootUp() async {
+    //if (await storage.ready) {
+    var data = await storage.getItem('user_contact');
+    if (data == null) {
+      Provider.of<ContactProvider>(context, listen: false).contactList = [];
+    } else {
+      // log('not empty');
+      Provider.of<ContactProvider>(context, listen: false).contactList =
+          userModelFromJson(data);
+    }
+  }
 
   @override
   void initState() {
-    // bootUp();
+    bootUp();
     super.initState();
     //user needs to be created before!
     isEmailVerified = auth.currentUser!.emailVerified;
@@ -123,7 +112,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
             );
           }
           if (!initialized) {
-            //bootUp();
+            bootUp();
 
             initialized = true;
           }
@@ -140,7 +129,10 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                         Image.asset("assets/images/app_logo.png",height: height*0.15,),
+                          Image.asset(
+                            "assets/images/app_logo.png",
+                            height: height * 0.15,
+                          ),
                           SizedBox(height: height * 0.01),
                           Text(
                             'Chat Me',
@@ -148,13 +140,12 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                           ),
                           SizedBox(height: height * 0.05),
                           AnimatedContainer(
-                              padding:
-                                  EdgeInsets.only(bottom: height * 0.03),
+                              padding: EdgeInsets.only(bottom: height * 0.03),
                               duration: const Duration(milliseconds: 700),
                               // height: height * 0.5,
                               width: width * 0.9,
                               decoration: BoxDecoration(
-                                 // color: primaryColorLight,
+                                  // color: primaryColorLight,
                                   borderRadius: BorderRadius.circular(20)),
                               child: Padding(
                                 padding: EdgeInsets.only(
@@ -166,8 +157,8 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Padding(
-                                          padding: const EdgeInsets.only(
-                                              bottom: 15),
+                                          padding:
+                                              const EdgeInsets.only(bottom: 15),
                                           child: Text("Email Verification",
                                               style: headTextBlack.copyWith(
                                                   color: primaryColor))),

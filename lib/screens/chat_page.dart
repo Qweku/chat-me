@@ -38,12 +38,43 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: primaryColor,
-        title: Text(
-          widget.receiverUserName,
-          style: headTextWhite,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: ListTile(
+          contentPadding: EdgeInsets.zero,
+          leading: CircleAvatar(
+            backgroundColor: Color.fromARGB(255, 240, 240, 240),
+            child: Icon(Icons.person, color: Colors.grey),
+          ),
+          title: Text(
+            widget.receiverUserName,
+            style: headTextBlack,
+          ),
+          subtitle: Text(
+            "online",
+            style: bodyTextBlack,
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.phone_outlined, color: Colors.grey),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(Icons.video_call_outlined, color: Colors.grey),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(Icons.flag_outlined, color: Colors.grey),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: Column(children: [
         Expanded(
@@ -101,14 +132,17 @@ class _ChatPageState extends State<ChatPage> {
               ? MainAxisAlignment.end
               : MainAxisAlignment.start,
           children: [
-            ChatBubble(
+            (data['senderId'] == _auth.currentUser!.uid)?SenderChatBubble(
               message: data['message'],
-              color: (data['senderId'] == _auth.currentUser!.uid)
-                  ? primaryColor
-                  : const Color.fromARGB(255, 17, 17, 17),
+              color: 
+                   primaryColor
+                  
+            ):ChatBubble(
+              message: data['message'],
+              color:  Color.fromARGB(255, 241, 241, 241),
             ),
             const SizedBox(height:7),
-            Text( data['time'],style: bodyTextBlack.copyWith(color: Colors.grey),),
+            Text( data['time'],style: bodyTextBlack.copyWith(color: Colors.grey,fontSize: 12),),
             const SizedBox(height:10),
           ]),
     );

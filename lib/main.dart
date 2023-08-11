@@ -1,18 +1,23 @@
 import 'package:chat_me/config/app_text.dart';
 import 'package:chat_me/firebase_options.dart';
+import 'package:chat_me/provider/chat_provider.dart';
 import 'package:chat_me/services/firebase_auth.dart';
 import 'package:chat_me/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-Future<void> main()async {
-   WidgetsFlutterBinding.ensureInitialized();
+import 'provider/contact_provider.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MultiProvider(providers: [
     Provider<AuthService>(
       create: (_) => AuthService(),
     ),
+    ChangeNotifierProvider(create: (_) => ContactProvider()),
+    ChangeNotifierProvider(create: (_) => ChatProvider()),
   ], child: const MyApp()));
 }
 
