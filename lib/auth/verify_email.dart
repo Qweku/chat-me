@@ -8,6 +8,7 @@ import 'package:chat_me/config/app_text.dart';
 import 'package:chat_me/constants.dart';
 import 'package:chat_me/models/user_model.dart';
 import 'package:chat_me/provider/contact_provider.dart';
+import 'package:chat_me/screens/chat_list.dart';
 import 'package:chat_me/screens/contact_list.dart';
 import 'package:chat_me/screens/home_screen.dart';
 import 'package:chat_me/services/firebase_auth.dart';
@@ -118,7 +119,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
           }
 
           return isEmailVerified
-              ? HomeScreen()
+              ? ChatList()
               : Scaffold(
                   backgroundColor: Colors.white,
                   body: Container(

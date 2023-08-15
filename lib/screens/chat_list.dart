@@ -2,27 +2,53 @@ import 'package:chat_me/components/textField-widget.dart';
 import 'package:chat_me/config/app_colors.dart';
 import 'package:chat_me/config/app_text.dart';
 import 'package:chat_me/constants.dart';
+import 'package:chat_me/screens/chat_page.dart';
+import 'package:chat_me/services/chat_services.dart';
+import 'package:chat_me/widgets/profile_avatar.dart';
+import 'package:chat_me/widgets/user_card.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter/services.dart';
 
-class ChatList extends StatelessWidget {
+class ChatList extends StatefulWidget {
   const ChatList({super.key});
+
+  @override
+  State<ChatList> createState() => _ChatListState();
+}
+
+class _ChatListState extends State<ChatList> {
+  final ChatService _chatService = ChatService();
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    _chatService.updateOnlineStatus(true);
+    SystemChannels.lifecycle.setMessageHandler((message) {
+      if (message == AppLifecycleState.paused)
+        _chatService.updateOnlineStatus(false);
+      if (message == AppLifecycleState.resumed)
+        _chatService.updateOnlineStatus(true);
+      return Future.value(message);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+          icon: Icon(Icons.circle, color: Color.fromARGB(255, 11, 172, 46)),
           onPressed: () {
-            Navigator.pop(context);
+           
           },
         ),
         backgroundColor: Colors.white,
         elevation: 0,
         title: Text(
-          "Direct Message",
+          "ChatMe",
           style: headTextBlack,
         ),
         actions: [
@@ -51,125 +77,99 @@ class ChatList extends StatelessWidget {
             ),
           ),
           //Frequently contacted
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical:15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Text(
-                    "Frequently Contacted",
-                    style: headTextBlack.copyWith(
-                        fontSize: 16, fontFamily: josefinBold),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                SizedBox(
-                  height: height * 0.1,
-                  child: ListView(
-                    padding: const EdgeInsets.only(left: 15),
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    physics: const BouncingScrollPhysics(),
-                    children: List.generate(
-                        7,
-                        (index) => Padding(
-                              padding: const EdgeInsets.only(right: 10),
-                              child: ProfileAvatar(),
-                            )),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Expanded(
-            child: ListView(
-              shrinkWrap: true,
-              physics: const BouncingScrollPhysics(),
-              children: List.generate(
-                  10,
-                  (index) => Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: ListTile(
-                          leading: ProfileAvatar2(),
-                          title: Text(
-                            "Rosa",
-                            style: headTextBlack,
-                          ),
-                          subtitle: Text(
-                            "last message blah blah blah blah",
-                            style: bodyTextBlack.copyWith(color:Colors.grey),
-                          ),
-                          trailing: Text("1 minute ago",style: bodyTextBlack.copyWith(color: Colors.grey),),
-                        ),
-                  )),
-            ),
-          )
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(vertical: 15),
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: [
+          //       Padding(
+          //         padding: const EdgeInsets.only(left: 15),
+          //         child: Text(
+          //           "Frequently Contacted",
+          //           style: headTextBlack.copyWith(
+          //               fontSize: 16, fontFamily: josefinBold),
+          //         ),
+          //       ),
+          //       const SizedBox(
+          //         height: 10,
+          //       ),
+          //       SizedBox(
+          //         height: height * 0.1,
+          //         child: ListView(
+          //           padding: const EdgeInsets.only(left: 15),
+          //           shrinkWrap: true,
+          //           scrollDirection: Axis.horizontal,
+          //           physics: const BouncingScrollPhysics(),
+          //           children: List.generate(
+          //               7,
+          //               (index) => Padding(
+          //                     padding: const EdgeInsets.only(right: 10),
+          //                     child: ProfileAvatar(),
+          //                   )),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+
+          // const SizedBox(
+          //   height: 10,
+          // ),
+          Expanded(child: _buildUserList())
         ],
       ),
     );
   }
-}
 
-class ProfileAvatar extends StatelessWidget {
-  const ProfileAvatar({
-    super.key,
-  });
+  Widget _buildUserList() {
+    return StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('users').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                "An Error Occured while fetching data",
+                style: headTextBlack.copyWith(color: Colors.grey),
+              ),
+            );
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(color: primaryColor),
+            );
+          }
 
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: height * 0.1,
-      child: Stack(
-        children: [
-          CircleAvatar(
-            backgroundColor: Color.fromARGB(255, 240, 240, 240),
-            child: Icon(Icons.person, color: Colors.grey),
-            radius: 35,
-          ),
-          Positioned(
-              bottom: height * 0.03,
-              right: 2,
-              child: Icon(
-                Icons.circle,size: 18,
-                color: Color.fromARGB(255, 9, 182, 15),
-              ))
-        ],
-      ),
-    );
+          return ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+            shrinkWrap: true,
+            children: snapshot.data!.docs
+                .map<Widget>((doc) => _buildUserListItem(doc))
+                .toList(),
+          );
+        });
   }
-}
-class ProfileAvatar2 extends StatelessWidget {
-  const ProfileAvatar2({
-    super.key,
-  });
 
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: height * 0.1,
-      child: Stack(
-        children: [
-          CircleAvatar(
-            backgroundColor: Color.fromARGB(255, 240, 240, 240),
-            child: Icon(Icons.person, color: Colors.grey),
-            radius: 35,
-          ),
-          Positioned(
-              bottom: 0,
-              right:6,
-              child: Icon(
-                Icons.circle,size: 18,
-                color: Color.fromARGB(255, 9, 182, 15),
-              ))
-        ],
-      ),
-    );
+  Widget _buildUserListItem(DocumentSnapshot document) {
+    Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+
+    //display all users except current user
+    if (auth.currentUser!.email != data['email']) {
+      return UserCard(
+        isOnline: isActive,
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ChatPage(
+                        receiverUserID: data['uid'],
+                        receiverUserName: data['username'],
+                      )));
+        },
+        name: data['username'],
+        receiverId: data['uid'],
+      );
+    } else {
+      return Container();
+    }
   }
 }

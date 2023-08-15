@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             title: Text(
-              data['username'],
+              data['username'] ??"",
               style: headTextBlack,
             ),
             subtitle: Text(data['email'],

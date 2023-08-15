@@ -11,7 +11,11 @@ class AuthService {
     if (user == null) {
       return null;
     }
-    return UserModel(uid:user.uid, email:user.email, displayName:user.displayName,userImage:user.photoURL);
+    return UserModel(
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        userImage: user.photoURL);
   }
 
   Stream<UserModel?> get user {
@@ -42,7 +46,11 @@ class AuthService {
     await _firebaseFirestore.collection('users').doc(credential.user!.uid).set({
       'uid': credential.user!.uid,
       'email': email,
-      'username': credential.user!.displayName
+      'username': displayName,
+      'last_seen': "",
+      'user_image': "",
+      'push_Token': "",
+      'is_active': false
     }, SetOptions(merge: true));
     return _userFromFirebase(credential.user);
   }
