@@ -42,7 +42,7 @@ class _ChatPageState extends State<ChatPage> {
   void sendMessage() async {
     if (messageController.text.isNotEmpty) {
       await _chatService.sendMessage(
-          widget.receiverUserID,Type.text, messageController.text);
+          widget.receiverUserID, Type.text, messageController.text);
       //clear controller after sending a message
       messageController.clear();
     }
@@ -66,25 +66,31 @@ class _ChatPageState extends State<ChatPage> {
               final data = snapshot.data?.docs;
               final list =
                   data?.map((e) => UserModel.fromJson(e.data())).toList() ?? [];
-              if (list.isNotEmpty) {
-                isActive = list[0].isActive!;
-              }
+
               return ListTile(
                 contentPadding: EdgeInsets.zero,
-                leading: CircleAvatar(
-                  backgroundColor: Color.fromARGB(255, 240, 240, 240),
-                  child: Text(
-                    widget.receiverUserName.toString().substring(0, 1),
-                    style: headTextWhite.copyWith(color: primaryColor),
-                  ),
-                ),
+                leading: list.isNotEmpty
+                    ? CircleAvatar(
+                        backgroundImage:
+                            MemoryImage(base64Decode(list[0].userImage!)),
+                      )
+                    : CircleAvatar(
+                        backgroundColor: Color.fromARGB(255, 240, 240, 240),
+                        child: Text(
+                          widget.receiverUserName.toString().substring(0, 1),
+                          style: headTextWhite.copyWith(color: primaryColor),
+                        ),
+                      ),
                 title: Text(
                   widget.receiverUserName,
                   style: headTextBlack,
                 ),
                 subtitle: list.isNotEmpty
                     ? Text(
-                        list[0].isActive! ? "online" : list[0].lastSeen!,
+                        list[0].isActive!
+                            ? "online"
+                            : TimeDateFormat()
+                                .getLastActiveTime(context, list[0].lastSeen!),
                         style: bodyTextBlack.copyWith(color: Colors.grey),
                       )
                     : Container(),
@@ -97,10 +103,6 @@ class _ChatPageState extends State<ChatPage> {
           ),
           IconButton(
             icon: Icon(Icons.video_call_outlined, color: Colors.grey),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.flag_outlined, color: Colors.grey),
             onPressed: () {},
           ),
         ],
@@ -154,7 +156,7 @@ class _ChatPageState extends State<ChatPage> {
     var alignment = (data['senderId'] == _auth.currentUser!.uid)
         ? Alignment.centerRight
         : Alignment.centerLeft;
-    
+
     return Container(
       alignment: alignment,
       child: Column(
@@ -167,13 +169,13 @@ class _ChatPageState extends State<ChatPage> {
           children: [
             (data['senderId'] == _auth.currentUser!.uid)
                 ? SenderChatBubble(
-                    type:data['type'],
+                    type: data['type'],
                     read: data['read'],
                     time: TimeDateFormat.getTimeformat(context, data['time']),
                     message: data['message'],
                     color: primaryColor)
                 : ChatBubble(
-                    type:data['type'],
+                    type: data['type'],
                     receiverId: widget.receiverUserID,
                     timestamp: data['timestamp'].toString(),
                     read: data['read'],
@@ -243,14 +245,11 @@ class _ChatPageState extends State<ChatPage> {
           await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
       // final toBytes = await
       setState(() {
-      
         _image = File(image!.path);
         imageString = base64Encode(File(image.path).readAsBytesSync());
 
-        _chatService.sendChatImage(
-            imageString,  widget.receiverUserID);
+        _chatService.sendChatImage(imageString, widget.receiverUserID);
       });
-      
     } catch (e) {}
   }
 
@@ -259,14 +258,11 @@ class _ChatPageState extends State<ChatPage> {
       final image =
           await picker.pickImage(source: ImageSource.gallery, imageQuality: 70);
       setState(() {
-        
         _image = File(image!.path);
 
         imageString = base64Encode(File(image.path).readAsBytesSync());
-        _chatService.sendChatImage(
-            imageString, widget.receiverUserID);
+        _chatService.sendChatImage(imageString, widget.receiverUserID);
       });
-      
     } catch (e) {
       debugPrint(e.toString());
     }

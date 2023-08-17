@@ -85,7 +85,7 @@ MessageModel? _message;
                     widget.name,
                     style: headTextBlack,
                   ),
-                  subtitle: _message != null && _message!.type == "text"
+                  subtitle: _message != null && _message!.type.name != "image"
                       ? Text(
                           _message!.message,
                           style: bodyTextBlack.copyWith(color: Colors.grey),
