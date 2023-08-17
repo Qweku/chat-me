@@ -1,15 +1,19 @@
 import 'dart:convert';
-
+import 'dart:developer';
+import 'dart:io';
+import 'package:chat_me/models/message_model.dart';
 import 'package:chat_me/components/chat_bubble.dart';
 import 'package:chat_me/components/textField-widget.dart';
 import 'package:chat_me/config/app_colors.dart';
 import 'package:chat_me/config/app_text.dart';
+import 'package:chat_me/constants.dart';
 import 'package:chat_me/models/user_model.dart';
 import 'package:chat_me/services/chat_services.dart';
 import 'package:chat_me/utils/time_date_format.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class ChatPage extends StatefulWidget {
@@ -27,12 +31,18 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController messageController = TextEditingController();
   final ChatService _chatService = ChatService();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final picker = ImagePicker();
+  FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
+  File? _image;
+  String imageString = '';
+  bool isImage = false;
+  String timeStamp = "";
   //send message
   void sendMessage() async {
     if (messageController.text.isNotEmpty) {
       await _chatService.sendMessage(
-          widget.receiverUserID, messageController.text);
+          widget.receiverUserID,Type.text, messageController.text);
       //clear controller after sending a message
       messageController.clear();
     }
@@ -56,33 +66,28 @@ class _ChatPageState extends State<ChatPage> {
               final data = snapshot.data?.docs;
               final list =
                   data?.map((e) => UserModel.fromJson(e.data())).toList() ?? [];
-
+              if (list.isNotEmpty) {
+                isActive = list[0].isActive!;
+              }
               return ListTile(
                 contentPadding: EdgeInsets.zero,
-                leading: list.isNotEmpty
-                    ? CircleAvatar(
-                        backgroundColor: Color.fromARGB(255, 240, 240, 240),
-                        child: Text(
-                          widget.receiverUserName.toString().substring(0, 1),
-                          style: headTextWhite.copyWith(color: primaryColor),
-                        ),
-                      )
-                    : CircleAvatar(
-                        backgroundImage:
-                            MemoryImage(base64Decode(list[0].userImage!)),
-                      ),
+                leading: CircleAvatar(
+                  backgroundColor: Color.fromARGB(255, 240, 240, 240),
+                  child: Text(
+                    widget.receiverUserName.toString().substring(0, 1),
+                    style: headTextWhite.copyWith(color: primaryColor),
+                  ),
+                ),
                 title: Text(
                   widget.receiverUserName,
                   style: headTextBlack,
                 ),
                 subtitle: list.isNotEmpty
-                      ? Text(
-                  list[0].isActive!
-                          ? "online"
-                          : list[0].lastSeen!
-                      ,
-                  style: bodyTextBlack.copyWith(color: Colors.grey),
-                ):Container(),
+                    ? Text(
+                        list[0].isActive! ? "online" : list[0].lastSeen!,
+                        style: bodyTextBlack.copyWith(color: Colors.grey),
+                      )
+                    : Container(),
               );
             }),
         actions: [
@@ -132,8 +137,11 @@ class _ChatPageState extends State<ChatPage> {
           }
           return ListView(
             padding: const EdgeInsets.all(20),
+            reverse: true,
             children: snapshot.data!.docs
                 .map((document) => _buildMessageItem(document))
+                .toList()
+                .reversed
                 .toList(),
           );
         }));
@@ -146,6 +154,7 @@ class _ChatPageState extends State<ChatPage> {
     var alignment = (data['senderId'] == _auth.currentUser!.uid)
         ? Alignment.centerRight
         : Alignment.centerLeft;
+    
     return Container(
       alignment: alignment,
       child: Column(
@@ -158,22 +167,20 @@ class _ChatPageState extends State<ChatPage> {
           children: [
             (data['senderId'] == _auth.currentUser!.uid)
                 ? SenderChatBubble(
-                    receiverId: widget.receiverUserID,
-                    timestamp: data['timestamp'].toString(),
+                    type:data['type'],
                     read: data['read'],
                     time: TimeDateFormat.getTimeformat(context, data['time']),
                     message: data['message'],
                     color: primaryColor)
                 : ChatBubble(
+                    type:data['type'],
+                    receiverId: widget.receiverUserID,
+                    timestamp: data['timestamp'].toString(),
+                    read: data['read'],
                     time: TimeDateFormat.getTimeformat(context, data['time']),
                     message: data['message'],
                     color: Color.fromARGB(255, 241, 241, 241),
                   ),
-            // const SizedBox(height: 7),
-            // Text(
-            //   TimeDateFormat.getTimeformat(context, data['time']),
-            //   style: bodyTextBlack.copyWith(color: Colors.grey, fontSize: 12),
-            // ),
             const SizedBox(height: 10),
           ]),
     );
@@ -184,6 +191,31 @@ class _ChatPageState extends State<ChatPage> {
       children: [
         Expanded(
           child: CustomTextField(
+            borderRadius: 20,
+            suffixIcon: SizedBox(
+              width: width * 0.3,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      Icons.image,
+                      color: primaryColor,
+                      size: 17,
+                    ),
+                    onPressed: () => _imgFromGallery(),
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.camera_alt,
+                      color: primaryColor,
+                      size: 17,
+                    ),
+                    onPressed: () => _imgFromCamera(),
+                  ),
+                ],
+              ),
+            ),
             borderColor: lightGreyColor,
             hintText: 'Type message here',
             controller: messageController,
@@ -203,5 +235,40 @@ class _ChatPageState extends State<ChatPage> {
         )
       ],
     );
+  }
+
+  Future _imgFromCamera() async {
+    try {
+      final image =
+          await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
+      // final toBytes = await
+      setState(() {
+      
+        _image = File(image!.path);
+        imageString = base64Encode(File(image.path).readAsBytesSync());
+
+        _chatService.sendChatImage(
+            imageString,  widget.receiverUserID);
+      });
+      
+    } catch (e) {}
+  }
+
+  _imgFromGallery() async {
+    try {
+      final image =
+          await picker.pickImage(source: ImageSource.gallery, imageQuality: 70);
+      setState(() {
+        
+        _image = File(image!.path);
+
+        imageString = base64Encode(File(image.path).readAsBytesSync());
+        _chatService.sendChatImage(
+            imageString, widget.receiverUserID);
+      });
+      
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 }

@@ -6,3 +6,4 @@ final double height =
     MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.height;
 
 bool isActive = false;
+String profileImg = "";

@@ -1,10 +1,11 @@
+import 'dart:developer';
+
 import 'package:chat_me/components/textField-widget.dart';
 import 'package:chat_me/config/app_colors.dart';
 import 'package:chat_me/config/app_text.dart';
-import 'package:chat_me/constants.dart';
 import 'package:chat_me/screens/chat_page.dart';
 import 'package:chat_me/services/chat_services.dart';
-import 'package:chat_me/widgets/profile_avatar.dart';
+import 'package:chat_me/widgets/side_drawer.dart';
 import 'package:chat_me/widgets/user_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,30 +22,47 @@ class ChatList extends StatefulWidget {
 class _ChatListState extends State<ChatList> {
   final ChatService _chatService = ChatService();
   final FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore fireStore = FirebaseFirestore.instance;
+  String imageString = '';
+  Future<void> getImage() async {
+    try {
+      QuerySnapshot data = await fireStore.collection("users").get();
+
+      for (QueryDocumentSnapshot snapshot in data.docs) {
+        // Check if current user id exist in database
+        if (auth.currentUser!.uid == snapshot["uid"]) {
+          setState(() {
+            imageString = snapshot["user_image"];
+          });
+        }
+      }
+    } on FirebaseException catch (e) {
+      log(e.toString());
+    }
+  }
 
   @override
   void initState() {
     _chatService.updateOnlineStatus(true);
     SystemChannels.lifecycle.setMessageHandler((message) {
-      if (message == AppLifecycleState.paused)
+      if (message == AppLifecycleState.paused.toString())
         _chatService.updateOnlineStatus(false);
-      if (message == AppLifecycleState.resumed)
+      if (message == AppLifecycleState.resumed.toString())
         _chatService.updateOnlineStatus(true);
       return Future.value(message);
     });
+    getImage();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: SideDrawer(
+        profileImage: imageString,
+      ),
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.circle, color: Color.fromARGB(255, 11, 172, 46)),
-          onPressed: () {
-           
-          },
-        ),
+        iconTheme: IconThemeData(color: primaryColor),
         backgroundColor: Colors.white,
         elevation: 0,
         title: Text(
@@ -155,7 +173,8 @@ class _ChatListState extends State<ChatList> {
     //display all users except current user
     if (auth.currentUser!.email != data['email']) {
       return UserCard(
-        isOnline: isActive,
+        index: 0,
+        isOnline: data['is_active'],
         onTap: () {
           Navigator.push(
               context,

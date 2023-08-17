@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:chat_me/constants.dart';
 import 'package:chat_me/models/message_model.dart';
@@ -15,7 +16,7 @@ class ChatService extends ChangeNotifier {
   final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
 
   //SEND MESSAGES
-  Future<void> sendMessage(String receiverId, String message) async {
+  Future<void> sendMessage(String receiverId,Type type, String message) async {
     // get current user info
 
     final String currentUserId = _auth.currentUser!.uid;
@@ -29,6 +30,7 @@ class ChatService extends ChangeNotifier {
         message: message,
         read: "",
         receiverId: receiverId,
+        type:type,
         time: timeNow,
         senderUsername: currentUsername,
         timestamp: timestamp);
@@ -44,7 +46,7 @@ class ChatService extends ChangeNotifier {
         .doc(chatRoomId)
         .collection('messages')
         .doc(timestamp.toString())
-        .set(newMessage.toMap());
+        .set(newMessage.toJson());
   }
 
   //GET MESSAGES
@@ -61,6 +63,7 @@ class ChatService extends ChangeNotifier {
         .snapshots();
   }
 
+//Update message read status
   Future<void> updateReadStatus(String receiverId, String timestamp) async {
     final String currentUserId = _auth.currentUser!.uid;
     List<String> ids = [currentUserId, receiverId];
@@ -75,6 +78,7 @@ class ChatService extends ChangeNotifier {
         .update({"read": DateTime.now().millisecondsSinceEpoch.toString()});
   }
 
+// Get last message sent or received
   Stream<QuerySnapshot<Map<String, dynamic>>> getLastMessage(
       String userId, String otherUserId) {
     List<String> ids = [userId, otherUserId];
@@ -90,6 +94,7 @@ class ChatService extends ChangeNotifier {
         .snapshots();
   }
 
+// Get user info
   Stream<QuerySnapshot<Map<String, dynamic>>> getUserInfo(String receiverId) {
     return _fireStore
         .collection('users')
@@ -97,12 +102,18 @@ class ChatService extends ChangeNotifier {
         .snapshots();
   }
 
+  // Update Online status of users
+
   Future<void> updateOnlineStatus(bool isOnline) async {
     _fireStore.collection('users').doc(_auth.currentUser!.uid).update({
       "is_active": isOnline,
       "last_seen": DateTime.now().millisecondsSinceEpoch.toString()
     });
+  }
 
-    // isActive = isOnline;
+  //Send an image in chat
+  Future<void> sendChatImage(
+      String message,String receiverId) async {
+    return sendMessage(receiverId,Type.image, message);
   }
 }
