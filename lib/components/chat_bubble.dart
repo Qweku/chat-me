@@ -5,7 +5,6 @@ import 'package:chat_me/config/app_text.dart';
 import 'package:chat_me/constants.dart';
 import 'package:chat_me/services/chat_services.dart';
 import 'package:flutter/material.dart';
-import 'package:chat_me/models/message_model.dart';
 
 class ChatBubble extends StatelessWidget {
   final String message, read, time, receiverId, timestamp;

@@ -6,7 +6,7 @@ import 'package:chat_me/config/app_text.dart';
 import 'package:chat_me/constants.dart';
 import 'package:chat_me/models/user_model.dart';
 import 'package:chat_me/provider/contact_provider.dart';
-import 'package:chat_me/screens/chat_page.dart';
+// import 'package:chat_me/screens/chat_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

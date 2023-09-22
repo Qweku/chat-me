@@ -2,16 +2,14 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:chat_me/constants.dart';
 import 'package:chat_me/main.dart';
 import 'package:chat_me/models/message_model.dart';
 import 'package:chat_me/models/user_model.dart';
 import 'package:chat_me/screens/chat_list.dart';
-import 'package:chat_me/screens/chat_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
