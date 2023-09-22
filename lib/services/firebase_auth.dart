@@ -14,6 +14,7 @@ class AuthService {
     return UserModel(
         uid: user.uid,
         email: user.email,
+        pushToken: "",
         displayName: user.displayName,
         userImage: user.photoURL);
   }

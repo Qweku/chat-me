@@ -45,6 +45,8 @@ dependencies:
   flutter_launcher_icons: ^0.11.0
   image_picker:
   cached_network_image:
+  firebase_messaging:
+  http:
 
 dev_dependencies:
   flutter_test:

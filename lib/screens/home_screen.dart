@@ -108,6 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       builder: (context) => ChatPage(
                             receiverUserID: data['uid'],
                             receiverUserName: data['username'],
+                             receiverPushToken: data['push_Token']
                           )));
             },
             leading: CircleAvatar(

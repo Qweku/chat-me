@@ -13,7 +13,7 @@ class UserModel {
   final String? userImage;
   final bool? isActive;
   final String? lastSeen;
-  final String? pushToken;
+  late String pushToken;
 
   UserModel(
       {this.isActive,
@@ -21,7 +21,7 @@ class UserModel {
       this.email,
       this.lastSeen,
       this.displayName,
-      this.pushToken,
+      required this.pushToken,
       this.userImage});
 
   Map<String, dynamic> toMap() {
@@ -31,7 +31,7 @@ class UserModel {
       'username': displayName ?? "",
       'last_seen': lastSeen ?? "",
       'user_image': userImage ?? "",
-      'push_Token':pushToken ?? "",
+      'push_Token':pushToken,
       'is_active': isActive ?? false
     };
   }

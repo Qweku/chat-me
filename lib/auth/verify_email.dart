@@ -11,6 +11,7 @@ import 'package:chat_me/provider/contact_provider.dart';
 import 'package:chat_me/screens/chat_list.dart';
 import 'package:chat_me/screens/contact_list.dart';
 import 'package:chat_me/screens/home_screen.dart';
+import 'package:chat_me/services/chat_services.dart';
 import 'package:chat_me/services/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -51,9 +52,11 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
   void initState() {
     bootUp();
     super.initState();
+   
+
     //user needs to be created before!
     isEmailVerified = auth.currentUser!.emailVerified;
-//  getShopProducts();
+
     if (!isEmailVerified) {
       sendVerificationEmail();
 

@@ -17,11 +17,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class ChatPage extends StatefulWidget {
-  final String receiverUserName, receiverUserID;
+  final String receiverUserName, receiverUserID,receiverPushToken;
   const ChatPage(
       {super.key,
       required this.receiverUserName,
-      required this.receiverUserID});
+      required this.receiverUserID, required this.receiverPushToken});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -37,16 +37,46 @@ class _ChatPageState extends State<ChatPage> {
   File? _image;
   String imageString = '';
   bool isImage = false;
-  String timeStamp = "";
+  String pushToken = "";
+
+//get user push token
+Future<void> getPushToken() async {
+    try {
+      QuerySnapshot data = await fireStore.collection("users").get();
+
+      for (QueryDocumentSnapshot snapshot in data.docs) {
+        // Check if current user id exist in database
+        if (_auth.currentUser!.uid == snapshot["uid"]) {
+          setState(() {
+            pushToken = snapshot["push_Token"];
+           
+           
+          });
+          log(pushToken);
+        }
+      }
+    } on FirebaseException catch (e) {
+      log(e.toString());
+    }
+  }
+
+
   //send message
   void sendMessage() async {
     if (messageController.text.isNotEmpty) {
       await _chatService.sendMessage(
-          widget.receiverUserID, Type.text, messageController.text);
+          widget.receiverUserID,widget.receiverPushToken, Type.text, messageController.text);
       //clear controller after sending a message
       messageController.clear();
     }
   }
+
+@override
+  void initState() {
+    getPushToken();
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -169,7 +199,7 @@ class _ChatPageState extends State<ChatPage> {
           children: [
             (data['senderId'] == _auth.currentUser!.uid)
                 ? SenderChatBubble(
-                    type: data['type'],
+                    type: data['type'] ?? "",
                     read: data['read'],
                     time: TimeDateFormat.getTimeformat(context, data['time']),
                     message: data['message'],
@@ -248,7 +278,7 @@ class _ChatPageState extends State<ChatPage> {
         _image = File(image!.path);
         imageString = base64Encode(File(image.path).readAsBytesSync());
 
-        _chatService.sendChatImage(imageString, widget.receiverUserID);
+        _chatService.sendChatImage(imageString,pushToken, widget.receiverUserID);
       });
     } catch (e) {}
   }
@@ -261,7 +291,7 @@ class _ChatPageState extends State<ChatPage> {
         _image = File(image!.path);
 
         imageString = base64Encode(File(image.path).readAsBytesSync());
-        _chatService.sendChatImage(imageString, widget.receiverUserID);
+        _chatService.sendChatImage(imageString,pushToken, widget.receiverUserID);
       });
     } catch (e) {
       debugPrint(e.toString());

@@ -36,6 +36,7 @@ class _ContactListState extends State<ContactList> {
         uid: snapshot["uid"],
         displayName: snapshot["username"],
         email: snapshot["email"],
+        pushToken: snapshot["push_Token"]
       );
 
       suggestions.add(contacts);
@@ -132,20 +133,20 @@ class _ContactListState extends State<ContactList> {
                                             .read<ContactProvider>()
                                             .contactList[index]),
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ChatPage(
-                                        receiverUserID: context
-                                            .read<ContactProvider>()
-                                            .contactList[index]
-                                            .uid,
-                                        receiverUserName: context
-                                                .read<ContactProvider>()
-                                                .contactList[index]
-                                                .displayName ??
-                                            "",
-                                      )));
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => ChatPage(
+                          //               receiverUserID: context
+                          //                   .read<ContactProvider>()
+                          //                   .contactList[index]
+                          //                   .uid,
+                          //               receiverUserName: context
+                          //                       .read<ContactProvider>()
+                          //                       .contactList[index]
+                          //                       .displayName ??
+                          //                   "",
+                          //             )));
                         },
                         leading: CircleAvatar(
                           backgroundColor: lightGreyColor,

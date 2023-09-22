@@ -17,24 +17,15 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -52,11 +43,40 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDYFsfI8gi9lfdt4vNjCYIc7a4YEAsbJHk',
-   appId: '1:925555659968:android:d6e05546813aa498ea4925',
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDKqk7fqfUID9nHm4FpoymK0JI0Qni8KeY',
+    appId: '1:925555659968:web:9423afac19d1cf68ea4925',
     messagingSenderId: '925555659968',
     projectId: 'chat-me-dc32d',
-    //storageBucket: 'smart-shop-mate.appspot.com',
+    authDomain: 'chat-me-dc32d.firebaseapp.com',
+    storageBucket: 'chat-me-dc32d.appspot.com',
+  );
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyDYFsfI8gi9lfdt4vNjCYIc7a4YEAsbJHk',
+    appId: '1:925555659968:android:d6e05546813aa498ea4925',
+    messagingSenderId: '925555659968',
+    projectId: 'chat-me-dc32d',
+    storageBucket: 'chat-me-dc32d.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyA5lQt4yD682lRa9k6frbtYZ3Atgq3oF40',
+    appId: '1:925555659968:ios:4d2826725b9d8430ea4925',
+    messagingSenderId: '925555659968',
+    projectId: 'chat-me-dc32d',
+    storageBucket: 'chat-me-dc32d.appspot.com',
+    iosClientId: '925555659968-ok0359b0vkg3g5ed6ge74mbrj4evgd5a.apps.googleusercontent.com',
+    iosBundleId: 'com.example.chatMe',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyA5lQt4yD682lRa9k6frbtYZ3Atgq3oF40',
+    appId: '1:925555659968:ios:4d2826725b9d8430ea4925',
+    messagingSenderId: '925555659968',
+    projectId: 'chat-me-dc32d',
+    storageBucket: 'chat-me-dc32d.appspot.com',
+    iosClientId: '925555659968-ok0359b0vkg3g5ed6ge74mbrj4evgd5a.apps.googleusercontent.com',
+    iosBundleId: 'com.example.chatMe',
   );
 }

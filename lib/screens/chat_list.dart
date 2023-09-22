@@ -43,12 +43,15 @@ class _ChatListState extends State<ChatList> {
 
   @override
   void initState() {
-    _chatService.updateOnlineStatus(true);
+    _chatService.getSelfInfo();
+   
     SystemChannels.lifecycle.setMessageHandler((message) {
-      if (message == AppLifecycleState.paused.toString())
-        _chatService.updateOnlineStatus(false);
-      if (message == AppLifecycleState.resumed.toString())
-        _chatService.updateOnlineStatus(true);
+      if (auth.currentUser != null) {
+        if (message == AppLifecycleState.paused.toString())
+          _chatService.updateOnlineStatus(false);
+        if (message == AppLifecycleState.resumed.toString())
+          _chatService.updateOnlineStatus(true);
+      }
       return Future.value(message);
     });
     getImage();
@@ -182,6 +185,7 @@ class _ChatListState extends State<ChatList> {
                   builder: (context) => ChatPage(
                         receiverUserID: data['uid'],
                         receiverUserName: data['username'],
+                        receiverPushToken: data['push_Token']
                       )));
         },
         name: data['username'],
