@@ -82,12 +82,12 @@ Future<void> getPushToken() async {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: primaryColor,
         elevation: 0,
         title: StreamBuilder(
             stream: _chatService.getUserInfo(widget.receiverUserID),
@@ -112,7 +112,7 @@ Future<void> getPushToken() async {
                       ),
                 title: Text(
                   widget.receiverUserName,
-                  style: headTextBlack,
+                  style: headTextWhite,
                 ),
                 subtitle: list.isNotEmpty
                     ? Text(
@@ -120,18 +120,18 @@ Future<void> getPushToken() async {
                             ? "online"
                             : TimeDateFormat()
                                 .getLastActiveTime(context, list[0].lastSeen!),
-                        style: bodyTextBlack.copyWith(color: Colors.grey),
+                        style: bodyTextWhite,
                       )
                     : Container(),
               );
             }),
         actions: [
           IconButton(
-            icon: Icon(Icons.phone_outlined, color: Colors.grey),
+            icon: Icon(Icons.phone_outlined, color: Colors.white),
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(Icons.video_call_outlined, color: Colors.grey),
+            icon: Icon(Icons.video_call_outlined, color: Colors.white),
             onPressed: () {},
           ),
         ],

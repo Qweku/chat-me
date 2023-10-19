@@ -16,7 +16,6 @@ import 'package:intl/intl.dart';
 
 Future<void> handleBackgroundMessage(RemoteMessage message) async {}
 
-
 class ChatService extends ChangeNotifier {
   // get instance of auth and Firestore
   final timeformat = DateFormat("HH:mm");
@@ -30,7 +29,8 @@ class ChatService extends ChangeNotifier {
   FirebaseMessaging fMessaging = FirebaseMessaging.instance;
 
   //SEND MESSAGES
-  Future<void> sendMessage(String receiverId,String pushToken, Type type, String message) async {
+  Future<void> sendMessage(
+      String receiverId, String pushToken, Type type, String message) async {
     // get current user info
 
     final String currentUserId = _auth.currentUser!.uid;
@@ -61,8 +61,8 @@ class ChatService extends ChangeNotifier {
         .collection('messages')
         .doc(timestamp.toString())
         .set(newMessage.toJson())
-        .then((value) => sendNotification(
-            currentUsername,pushToken, type.name == "text" ? message : "image"));
+        .then((value) => sendNotification(currentUsername, pushToken,
+            type.name == "text" ? message : "image"));
   }
 
   //GET MESSAGES
@@ -119,7 +119,7 @@ class ChatService extends ChangeNotifier {
   }
 
 // get current use info
-  Future<void> getSelfInfo() async {
+  Future<void> getSelfInfo(bool isActive) async {
     await _fireStore
         .collection('users')
         .doc(_auth.currentUser!.uid)
@@ -130,8 +130,8 @@ class ChatService extends ChangeNotifier {
         await getFMToken();
 
         //setting user online status
-        updateOnlineStatus(true);
-        log("My data: ${user.data()}");
+        updateOnlineStatus(isActive);
+        //log("My data: ${user.data()}");
       }
     });
   }
@@ -139,16 +139,21 @@ class ChatService extends ChangeNotifier {
   // Update Online status of users
 
   Future<void> updateOnlineStatus(bool isOnline) async {
-    _fireStore.collection('users').doc(_auth.currentUser!.uid).update({
-      "is_active": isOnline,
-      "last_seen": DateTime.now().millisecondsSinceEpoch.toString(),
-      "push_Token": me.pushToken
-    });
+    try {
+      await _fireStore.collection('users').doc(_auth.currentUser?.uid).update({
+        "is_active": isOnline,
+        "last_seen": DateTime.now().millisecondsSinceEpoch.toString(),
+        "push_Token": me.pushToken
+      });
+    } catch (e) {
+      log(e.toString());
+    }
   }
 
   //Send an image in chat
-  Future<void> sendChatImage(String message,String pushToken, String receiverId) async {
-    return sendMessage(receiverId,pushToken, Type.image, message);
+  Future<void> sendChatImage(
+      String message, String pushToken, String receiverId) async {
+    return sendMessage(receiverId, pushToken, Type.image, message);
   }
 
   // get firebase messaging token
@@ -161,14 +166,15 @@ class ChatService extends ChangeNotifier {
       }
     });
   }
-   void handleMessage(RemoteMessage? message) {
+
+  void handleMessage(RemoteMessage? message) {
     if (message == null) return;
 
     navigatorKey.currentState?.push(
         MaterialPageRoute(builder: (BuildContext context) => ChatList()));
   }
 
-   Future initPushNotifications() async {
+  Future initPushNotifications() async {
     await FirebaseMessaging.instance
         .setForegroundNotificationPresentationOptions(
             alert: true, badge: true, sound: true);
@@ -195,7 +201,8 @@ class ChatService extends ChangeNotifier {
   }
 
   //send notification using google api
-  Future<void> sendNotification(String senderName,String pushToken, String msg) async {
+  Future<void> sendNotification(
+      String senderName, String pushToken, String msg) async {
     try {
       final body = {
         "to": pushToken,

@@ -10,16 +10,18 @@ class Button extends StatelessWidget {
   final double? width;
   final Color borderColor;
   final bool buttonShadow;
-  final double radius;
+  final double radius, verticalPadding;
   const Button({
     Key? key,
     this.onTap,
-   required this.buttonText,
+    required this.buttonText,
     this.color = Colors.transparent,
     this.width,
     this.borderColor = Colors.transparent,
     this.buttonShadow = true,
-    this.textColor = Colors.white, this.radius = 15,
+    this.textColor = Colors.white,
+    this.radius = 10,
+    this.verticalPadding = 18,
   }) : super(key: key);
 
   @override
@@ -35,7 +37,7 @@ class Button extends StatelessWidget {
               borderRadius: BorderRadius.circular(radius),
               side: BorderSide(color: borderColor)),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
+            padding: EdgeInsets.symmetric(vertical: verticalPadding),
             child: Text(
               buttonText,
               textAlign: TextAlign.center,

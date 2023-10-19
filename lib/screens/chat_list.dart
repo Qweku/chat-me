@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:chat_me/components/textField-widget.dart';
 import 'package:chat_me/config/app_colors.dart';
 import 'package:chat_me/config/app_text.dart';
+import 'package:chat_me/constants.dart';
 import 'package:chat_me/screens/chat_page.dart';
 import 'package:chat_me/services/chat_services.dart';
 import 'package:chat_me/widgets/side_drawer.dart';
@@ -43,7 +44,7 @@ class _ChatListState extends State<ChatList> {
 
   @override
   void initState() {
-    _chatService.getSelfInfo();
+    _chatService.getSelfInfo(true);
    
     SystemChannels.lifecycle.setMessageHandler((message) {
       if (auth.currentUser != null) {
@@ -65,39 +66,42 @@ class _ChatListState extends State<ChatList> {
         profileImage: imageString,
       ),
       appBar: AppBar(
-        iconTheme: IconThemeData(color: primaryColor),
-        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: secondaryColor),
+        backgroundColor: primaryColor,
         elevation: 0,
         title: Text(
           "ChatMe",
-          style: headTextBlack,
+          style: headTextWhite,
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.settings_outlined, color: Colors.grey),
+            icon: Icon(Icons.settings_outlined, color: Colors.white),
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(Icons.chat_bubble_outline, color: Colors.grey),
+            icon: Icon(Icons.chat_bubble_outline, color: Colors.white),
             onPressed: () {},
           ),
         ],
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
+        bottom: PreferredSize(preferredSize: Size.fromHeight(height*0.08),
+        child: Padding(
             padding: const EdgeInsets.all(15),
             child: CustomTextField(
               borderRadius: 20,
               prefixIcon:
                   Icon(Icons.search, color: Color.fromARGB(255, 240, 240, 240)),
-              hintText: "Search",
+              hintText: "Search chat",
+              hintColor: Colors.white,
               borderColor: Color.fromARGB(255, 240, 240, 240),
-              style: bodyTextBlack.copyWith(fontSize: 16),
+              style: bodyTextWhite.copyWith(fontSize: 16),
             ),
           ),
-          //Frequently contacted
+        ),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+         //Frequently contacted
           // Padding(
           //   padding: const EdgeInsets.symmetric(vertical: 15),
           //   child: Column(

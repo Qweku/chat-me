@@ -13,7 +13,8 @@ import 'package:provider/provider.dart';
 class SideDrawer extends StatefulWidget {
   final String profileImage;
   const SideDrawer({
-    super.key, required this.profileImage,
+    super.key,
+    required this.profileImage,
   });
 
   @override
@@ -21,7 +22,7 @@ class SideDrawer extends StatefulWidget {
 }
 
 class _SideDrawerState extends State<SideDrawer> {
- final ChatService _chatService = ChatService();
+  final ChatService _chatService = ChatService();
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,8 @@ class _SideDrawerState extends State<SideDrawer> {
                       )
                     : CircleAvatar(
                         radius: 50,
-                        backgroundImage: MemoryImage(base64Decode(widget.profileImage)),
+                        backgroundImage:
+                            MemoryImage(base64Decode(widget.profileImage)),
                       ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20, bottom: 10),
@@ -73,8 +75,9 @@ class _SideDrawerState extends State<SideDrawer> {
           ),
           DrawerItem(
             onTap: () {
-               authService.signOut();
-                _chatService.updateOnlineStatus(false);
+              _chatService.getSelfInfo(false)
+                  .then((value) => authService
+                  .signOut());
             },
             text: 'Logout',
             icon: Icons.logout,

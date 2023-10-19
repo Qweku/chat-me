@@ -81,6 +81,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+            backgroundColor: Color.fromARGB(255, 8, 0, 92),
+
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -89,16 +91,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(height:height*0.15),
-              Image.asset("assets/images/app_logo.png",height: height*0.15,),
+              CircleAvatar(
+                radius: 40,
+                backgroundColor: Colors.white,
+                child: Image.asset("assets/images/app_logo.png",height: height*0.15,)),
               const SizedBox(
-                height: 50,
+                height: 30,
               ),
               Text(
                 'Create a new account',
-                style: headTextBlack.copyWith(fontSize: 18),
+                style: headTextWhite.copyWith(fontSize: 18),
               ),
               const SizedBox(
-                height: 30,
+                height: 50,
               ),
               CustomTextField(
                 prefixIcon:
@@ -175,7 +180,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 50,
               ),
               Button(
-                color: primaryColor,
+                color: secondaryColor,
                 width: width,
                 buttonText: 'Sign Up',
                 onTap: register,
@@ -188,7 +193,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 children: [
                   Text(
                     "Already have an account?",
-                    style: bodyTextBlack.copyWith(color: Colors.grey),
+                    style: bodyTextBlack.copyWith(color: Colors.white),
                   ),
                   const SizedBox(
                     width: 7,

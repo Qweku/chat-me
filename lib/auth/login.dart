@@ -1,3 +1,4 @@
+import 'package:chat_me/auth/forgotten_password.dart';
 import 'package:chat_me/components/button.dart';
 import 'package:chat_me/components/textField-widget.dart';
 import 'package:chat_me/config/app_colors.dart';
@@ -50,8 +51,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void login() async {
-    final authService = Provider.of<AuthService>(context,listen: false);
-     if (emailController.text.isEmpty) {
+    final authService = Provider.of<AuthService>(context, listen: false);
+    if (emailController.text.isEmpty) {
       Toast(
           context: context,
           color: const Color.fromARGB(255, 230, 22, 7),
@@ -94,6 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 8, 0, 92),
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -101,20 +103,27 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height:height*0.15),
-              Image.asset("assets/images/app_logo.png",height: height*0.15,),
-              const SizedBox(
-                height: 50,
-              ),
-              Text(
-                'Login to Your Account',
-                style: headTextBlack.copyWith(fontSize: 18),
-              ),
+              SizedBox(height: height * 0.15),
+              CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 40,
+                  child: Image.asset(
+                    "assets/images/app_logo.png",
+                    height: height * 0.15,
+                  )),
               const SizedBox(
                 height: 30,
               ),
+              Text(
+                'Login to Your Account',
+                style: headTextWhite.copyWith(fontSize: 18),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
               CustomTextField(
-                prefixIcon: const Icon(Icons.email, color: Colors.grey, size: 18),
+                prefixIcon:
+                    const Icon(Icons.email, color: Colors.grey, size: 18),
                 style: bodyTextBlack,
                 color: lightGreyColor,
                 controller: emailController,
@@ -125,7 +134,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               CustomTextField(
                 obscure: obscure,
-                prefixIcon: const Icon(Icons.lock, color: Colors.grey, size: 18),
+                prefixIcon:
+                    const Icon(Icons.lock, color: Colors.grey, size: 18),
                 style: bodyTextBlack,
                 color: lightGreyColor,
                 controller: passwordController,
@@ -154,10 +164,14 @@ class _LoginScreenState extends State<LoginScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                
-                  
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const ForgottenPassword()));
+                      },
                       child: Text(
                         'Forgot the password?',
                         style: bodyTextBlack.copyWith(color: secondaryColor),
@@ -168,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 50,
               ),
               Button(
-                color: primaryColor,
+                color: secondaryColor,
                 width: width,
                 buttonText: 'Login',
                 onTap: login,
@@ -181,7 +195,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   Text(
                     "Don't have an account?",
-                    style: bodyTextBlack.copyWith(color: Colors.grey),
+                    style: bodyTextBlack.copyWith(
+                        color: const Color.fromARGB(255, 253, 253, 253)),
                   ),
                   const SizedBox(
                     width: 7,

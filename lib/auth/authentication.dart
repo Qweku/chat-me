@@ -18,11 +18,21 @@ class _AuthenticationState extends State<Authentication> {
       isLogin = !isLogin;
     });
   }
- DateTime? currentBackPressTime;
+
+  DateTime? currentBackPressTime;
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(onWillPop:doubleTapToExit,child: isLogin ? LoginScreen(onTap: toggle,):RegisterScreen(onTap: toggle,));
+    return WillPopScope(
+        onWillPop: doubleTapToExit,
+        child: isLogin
+            ? LoginScreen(
+                onTap: toggle,
+              )
+            : RegisterScreen(
+                onTap: toggle,
+              ));
   }
+
   Future<bool> doubleTapToExit() {
     DateTime now = DateTime.now();
     if (currentBackPressTime == null ||
@@ -30,7 +40,7 @@ class _AuthenticationState extends State<Authentication> {
       currentBackPressTime = now;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          width: width*0.45,
+            width: width * 0.45,
             backgroundColor: Color.fromARGB(255, 8, 8, 8),
             content: Text('Repeat action to exit',
                 textAlign: TextAlign.center, style: bodyTextWhite),
