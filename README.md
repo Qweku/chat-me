@@ -28,7 +28,7 @@ Users will need:
 
 
 ### Screenshot
-
+|-------------|------------|
 | ![Login](./appImgs/login.jpg)        | ![SignUp](./appImgs/signup.jpg) |
 | ![Chat list](./appImgs/chatlist.jpg) | ![Chats](./appImgs/chats.jpg)   |
 | ![Profile](./appImgs/profile.jpg)    |
