@@ -28,10 +28,11 @@ Users will need:
 
 
 ### Screenshot
+
 |-------------|------------|
-| ![Login](./appImgs/login.jpg)        | ![SignUp](./appImgs/signup.jpg) |
-| ![Chat list](./appImgs/chatlist.jpg) | ![Chats](./appImgs/chats.jpg)   |
-| ![Profile](./appImgs/profile.jpg)    |
+| ![Left](./appImgs/login.jpg)        | ![Right](./appImgs/signup.jpg) |
+| ![Left](./appImgs/chatlist.jpg)     | ![Right](./appImgs/chats.jpg)   |
+| ![Left](./appImgs/profile.jpg)      |
 
 ### Links
 
