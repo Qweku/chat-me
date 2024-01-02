@@ -29,11 +29,11 @@ Users will need:
 
 ### Screenshot
 
-![Login](./appImgs/login.png)
-![SignUp](./appImgs/signup.png)
-![Chat list](./appImgs/chatlist.png)
-![Chats](./appImgs/chats.png)
-![Profile](./appImgs/profile.png)
+![Login](appImgs/login.png)
+![SignUp](appImgs/signup.png)
+![Chat list](appImgs/chatlist.png)
+![Chats](appImgs/chats.png)
+![Profile](appImgs/profile.png)
 
 ### Links
 
