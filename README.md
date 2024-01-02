@@ -44,6 +44,7 @@ Users will need:
 -   Firebase auth
 -   Cloud firestore
 -   Firebase messaging
+-   Http
 
 
 ## Author
