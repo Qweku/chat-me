@@ -49,5 +49,7 @@ Users will need:
 
 ## Author
 
--   Website - [Collins A. B. Brobbey Jnr](https://www.linkedin.com/in/collins-a-b-brobbey-jnr-27253810b)
+-   [Collins A. B. Brobbey Jnr](https://www.linkedin.com/in/collins-a-b-brobbey-jnr-27253810b)
 -   Email - [brobbeycollins96@gmail.com]
+-   [Jeffrey K. Boahen](https://www.github.com/yellow-Flickr)
+-   Email - [jeffboach@gmail.com]
