@@ -117,22 +117,23 @@ class _ProfileState extends State<Profile> {
             ];
           },
           body: Scaffold(
+            backgroundColor: darkColor,
             body: Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                Text("Account",style: headTextBlack.copyWith(color: primaryColor,fontFamily: josefinBold),),
+                Text("Account",style: headTextWhite.copyWith(fontFamily: josefinBold),),
                 SizedBox(width: width*0.1,
                 child: Divider(thickness: 3,color: secondaryColor,),),
                 SizedBox(height: 20,),
                 ListTile(
-                  title: Text(_auth.currentUser!.displayName!,style:headTextBlack),
-                  subtitle: Text("username",style: bodyTextBlack.copyWith(color: Colors.grey),),
+                  title: Text(_auth.currentUser!.displayName!,style:headTextWhite),
+                  subtitle: Text("username",style: bodyTextWhite.copyWith(color: Colors.grey),),
                 ),
                 Divider(color: Color.fromARGB(255, 238, 238, 238),),
                  ListTile(
-                  title: Text(_auth.currentUser!.email!,style:headTextBlack),
+                  title: Text(_auth.currentUser!.email!,style:headTextWhite),
                   subtitle: Text("email",style: bodyTextBlack.copyWith(color: Colors.grey),),
                 ),
                  Divider(color: Color.fromARGB(255, 238, 238, 238),),
@@ -141,7 +142,7 @@ class _ProfileState extends State<Profile> {
                       Navigator.push(context,
                   MaterialPageRoute(builder: (context) => EditProfile()));
                   },
-                  title: Text(bio==""?"No bio":bio,style:headTextBlack),
+                  title: Text(bio==""?"No bio":bio,style:headTextWhite),
                   subtitle: Text("bio",style: bodyTextBlack.copyWith(color: Colors.grey),),
                 ),
                 

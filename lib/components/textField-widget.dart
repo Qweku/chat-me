@@ -80,11 +80,11 @@ class CustomTextField extends StatelessWidget {
         //   borderSide:BorderSide(color:borderColor,width:2)),
         focusedBorder:underline? UnderlineInputBorder(borderSide: BorderSide(color: underlineColor)):OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius  ), 
-          borderSide:BorderSide(color:borderColor,width:1.5)),
+          borderSide:BorderSide(color:borderColor,width:1)),
         enabledBorder: underline?UnderlineInputBorder(borderSide: BorderSide(color: underlineColor)):
         OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius  ), 
-          borderSide:BorderSide(color:borderColor,width:1.5)),
+          borderSide:BorderSide(color:borderColor,width:1)),
         errorBorder: InputBorder.none,
         disabledBorder: InputBorder.none,
         contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15.0),

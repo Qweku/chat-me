@@ -29,6 +29,7 @@ class _SideDrawerState extends State<SideDrawer> {
     final authService = Provider.of<AuthService>(context);
     final FirebaseAuth auth = FirebaseAuth.instance;
     return Drawer(
+      backgroundColor: darkColor,
       child: Column(
         children: [
           SizedBox(
@@ -104,10 +105,10 @@ class DrawerItem extends StatelessWidget {
     return ListTile(
         leading: Icon(icon, color: secondaryColor),
         title: Text(text,
-            style: bodyTextBlack.copyWith(fontSize: 14, color: primaryColor)),
+            style: bodyTextWhite.copyWith(fontSize: 14,)),
         trailing: Icon(
           Icons.arrow_forward_ios,
-          color: primaryColor,
+          color: lightGreyColor,
           size: 15,
         ),
         onTap: onTap);

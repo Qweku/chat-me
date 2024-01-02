@@ -83,7 +83,7 @@ MessageModel? _message;
                   ),
                   title: Text(
                     widget.name,
-                    style: headTextBlack,
+                    style: headTextWhite,
                   ),
                   subtitle: _message != null && _message!.type.name != "image"
                       ? Text(
@@ -133,7 +133,7 @@ MessageModel? _message;
                 Padding(
                   padding: const EdgeInsets.only(left: 50),
                   child: Divider(
-                    color: Color.fromARGB(255, 216, 216, 216),
+                    color: Color.fromARGB(255, 15, 15, 15),
                   ),
                 )
               ],

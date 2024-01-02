@@ -80,6 +80,7 @@ Future<void> getPushToken() async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: darkColor,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -87,8 +88,8 @@ Future<void> getPushToken() async {
             Navigator.pop(context);
           },
         ),
-        backgroundColor: primaryColor,
-        elevation: 0,
+        backgroundColor: darkColor,
+        elevation: 1,
         title: StreamBuilder(
             stream: _chatService.getUserInfo(widget.receiverUserID),
             builder: (context, snapshot) {

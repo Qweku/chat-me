@@ -25,6 +25,7 @@ class _ChatListState extends State<ChatList> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore fireStore = FirebaseFirestore.instance;
   String imageString = '';
+  bool isSearch = false;
   Future<void> getImage() async {
     try {
       QuerySnapshot data = await fireStore.collection("users").get();
@@ -62,18 +63,27 @@ class _ChatListState extends State<ChatList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: darkColor,
       drawer: SideDrawer(
         profileImage: imageString,
       ),
       appBar: AppBar(
         iconTheme: IconThemeData(color: secondaryColor),
-        backgroundColor: primaryColor,
+        backgroundColor: darkColor,
         elevation: 0,
         title: Text(
           "ChatMe",
           style: headTextWhite,
         ),
         actions: [
+          IconButton(
+            icon: Icon(Icons.search_outlined, color: Colors.white),
+            onPressed: () {
+              setState(() {
+                isSearch = !isSearch;
+              });
+            },
+          ),
           IconButton(
             icon: Icon(Icons.settings_outlined, color: Colors.white),
             onPressed: () {},
@@ -83,8 +93,8 @@ class _ChatListState extends State<ChatList> {
             onPressed: () {},
           ),
         ],
-        bottom: PreferredSize(preferredSize: Size.fromHeight(height*0.08),
-        child: Padding(
+        bottom: PreferredSize(preferredSize: isSearch ?Size.fromHeight(height*0.08):Size.fromHeight(height*0.01),
+        child: isSearch ? Padding(
             padding: const EdgeInsets.all(15),
             child: CustomTextField(
               borderRadius: 20,
@@ -95,7 +105,7 @@ class _ChatListState extends State<ChatList> {
               borderColor: Color.fromARGB(255, 240, 240, 240),
               style: bodyTextWhite.copyWith(fontSize: 16),
             ),
-          ),
+          ): Container()
         ),
       ),
       body: Column(

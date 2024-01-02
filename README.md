@@ -1,17 +1,52 @@
-# chat_me
+# Chat Me - A flutter app
 
-A new Flutter project.
+## Table of contents
 
-## Getting Started
+-   [Overview](#overview)
+    -   [Requirements](#requirements)
+    -   [Features](#features)
+    -   [Screenshot](#screenshot)
+    -   [Links](#links)
+-   [Major packages](#major-packages)
 
-This project is a starting point for a Flutter application.
+-   [Author](#author)
+<!-- -   [Acknowledgments](#acknowledgments) -->
 
-A few resources to get you started if this is your first Flutter project:
+## Overview
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Requirements
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# chat-me
+Users will need:
+
+-   Device - Mobile
+-   OS - Android, IOS
+
+### Features
+
+-   End to end messaging
+-   Media sharing
+
+
+### Screenshot
+
+![Login](./appImgs/login.png)
+![SignUp](./appImgs/signup.png)
+![Chat list](./appImgs/chatlist.png)
+![Chats](./appImgs/chats.png)
+![Profile](./appImgs/profile.png)
+
+### Links
+
+-   Download : [Download link](#)
+
+## Major packages
+
+-   Firebase auth
+-   Cloud firestore
+-   Firebase messaging
+
+
+## Author
+
+-   Website - [Collins A. B. Brobbey Jnr](https://www.linkedin.com/in/collins-a-b-brobbey-jnr-27253810b)
+-   Email - [brobbeycollins96@gmail.com]

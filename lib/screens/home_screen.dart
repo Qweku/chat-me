@@ -28,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return WillPopScope(
       onWillPop: doubleTapToExit,
       child: Scaffold(
+        backgroundColor: darkColor,
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               Navigator.push(context,
@@ -38,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           appBar: AppBar(
             elevation: 0,
-            backgroundColor: primaryColor,
+            backgroundColor: darkColor,
             title: Text(
               "ChatMe",
               style: headTextWhite,
@@ -101,6 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
       return Padding(
         padding: const EdgeInsets.only(bottom: 10),
         child: ListTile(
+          contentPadding: EdgeInsets.zero,
             onTap: () {
               Navigator.push(
                   context,
