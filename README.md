@@ -9,7 +9,7 @@
     -   [Links](#links)
 -   [Major packages](#major-packages)
 
--   [Author](#author)
+-   [Author(s)](#author)
 <!-- -   [Acknowledgments](#acknowledgments) -->
 
 ## Overview
@@ -47,7 +47,7 @@ Users will need:
 -   Http
 
 
-## Author
+## Author(s)
 
 -   [Collins A. B. Brobbey Jnr](https://www.linkedin.com/in/collins-a-b-brobbey-jnr-27253810b)
 -   Email - [brobbeycollins96@gmail.com]
