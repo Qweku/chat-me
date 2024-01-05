@@ -1,55 +1,40 @@
-# Chat Me - A flutter app
+# ChatMe
 
-## Table of contents
+Welcome to ChatMe! This Flutter-based chat application allows users to communicate seamlessly with friends and family.
 
--   [Overview](#overview)
-    -   [Requirements](#requirements)
-    -   [Features](#features)
-    -   [Screenshot](#screenshot)
-    -   [Links](#links)
--   [Major packages](#major-packages)
+## Requirements
+- Flutter SDK
+- Dart SDK
+- Other dependencies mentioned in `pubspec.yaml`
+- Android or IOS device
 
--   [Author(s)](#author)
-<!-- -   [Acknowledgments](#acknowledgments) -->
+## Features
+- Real-time messaging
+- User authentication
+- Image and file sharing
+- Push notifications
 
-## Overview
-
-### Requirements
-
-Users will need:
-
--   Device - Mobile
--   OS - Android, IOS
-
-### Features
-
--   End to end messaging
--   Media sharing
+## Links
+- [GitHub Repository](https://github.com/Qweku/chat-me)
 
 
-### Screenshot
+## Screenshots
 
-| Left | Right |
-|-------------|------------|
-| ![Left](./appImgs/login.jpg)        | ![Right](./appImgs/signup.jpg)  |
-| ![Left](./appImgs/chatlist.jpg)     | ![Right](./appImgs/chats.jpg)   |
-| ![Left](./appImgs/profile.jpg)      |
+| Login | Sign Up | Chat List |
+|-------------|--------------|------------|
+| ![Login](appImgs/login.jpg) | ![Sign Up](appImgs/signup.jpg) | ![Chat List](appImgs/chatlist.jpg) |
 
-### Links
+| Chats | User Profile | xxxxx |
+|-------------|--------------|------------|
+| ![Chats](appImgs/chats.jpg)] | ![User Profile](appImgs/profile.jpg) |
 
--   Download : [Download link](#)
+## Major Packages
+- `firebase_core: ^x.x.x`
+- `firebase_auth: ^x.x.x`
+- `cloud_firestore: ^x.x.x`
+- `http: ^x.x.x`
+- Other packages as listed in `pubspec.yaml`
 
-## Major packages
-
--   Firebase auth
--   Cloud firestore
--   Firebase messaging
--   Http
-
-
-## Author(s)
-
--   [Collins A. B. Brobbey Jnr](https://www.linkedin.com/in/collins-a-b-brobbey-jnr-27253810b)
--   Email - [brobbeycollins96@gmail.com]
--   [Jeffrey K. Boahen](https://www.github.com/yellow-Flickr)
--   Email - [jeffboach@gmail.com]
+## Authors
+- [Collins Brobbey Jnr](https://github.com/Qweku)
+- [Jeffrey Boahen](https://github.com/yellow_Flickr)
