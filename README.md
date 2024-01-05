@@ -26,7 +26,7 @@ Welcome to ChatMe! This Flutter-based chat application allows users to communica
 
 | Chats | User Profile | xxxxx |
 |-------------|--------------|------------|
-| ![Chats](appImgs/chats.jpg)] | ![User Profile](appImgs/profile.jpg) |
+| ![Chats](appImgs/chats.jpg) | ![User Profile](appImgs/profile.jpg) |
 
 ## Major Packages
 - `firebase_core: ^x.x.x`
