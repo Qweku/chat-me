@@ -14,8 +14,12 @@ Welcome to ChatMe! This Flutter-based chat application allows users to communica
 - Image and file sharing
 - Push notifications
 
-## Links
-- [GitHub Repository](https://github.com/Qweku/chat-me)
+## Walkthrough
+- 
+
+https://github.com/Qweku/chat-me/assets/79706544/c17e9548-5d9f-4077-a3c1-c7a3fa7ec779
+
+
 
 
 ## Screenshots
